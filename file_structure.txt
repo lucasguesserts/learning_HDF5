@@ -1,0 +1,6 @@
+/ (root group)
+	Attribute "name" : "test file"
+	Group "group example"
+		Attribute "number" : 3
+		Dataset "simple vector" : [0, 1, 2]
+	Dataset "complex vector" : [[0, 1, 2], [0, 10, 20]]
