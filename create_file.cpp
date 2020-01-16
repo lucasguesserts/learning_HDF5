@@ -75,6 +75,7 @@ int main()
 		dataset.close();
 	}
 
+	group.close();
 	file.close();
 	return 0;
 }
