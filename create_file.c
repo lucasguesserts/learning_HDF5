@@ -62,6 +62,16 @@ int main()
 	status    = H5Sclose(dataspace);
 	status    = H5Dclose(dataset);
 
+	/* Group with hard link */
+	hid_t groupHL;
+	const char groupHLname[] = "something inside";
+	groupHL   = H5Gcreate(file, groupHLname, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
+
+	/* Hard link within group */
+	const char hardLinkName[] = "group with things";
+	status    = H5Lcreate_hard(group, ".", groupHL, hardLinkName, H5P_DEFAULT, H5P_DEFAULT);
+
+	status = H5Gclose(groupHL);
 	status = H5Gclose(group);
 	status = H5Fclose(file);
 	return 0;
