@@ -75,6 +75,11 @@ int main()
 		dataset.close();
 	}
 
+	// Group with hard liink
+	H5::Group groupHL = file.createGroup("something inside");
+	groupHL.link(H5L_TYPE_HARD, "/group example", "group with things");
+
+	groupHL.close();
 	group.close();
 	file.close();
 	return 0;
