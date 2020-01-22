@@ -1,6 +1,9 @@
 C API:
 https://support.hdfgroup.org/HDF5/doc/RM/RM_H5Front.html
 
+C examples:
+https://support.hdfgroup.org/HDF5/examples/api-c.html
+
 C++ API:
 https://support.hdfgroup.org/HDF5/doc/cpplus_RM/index.html
 
