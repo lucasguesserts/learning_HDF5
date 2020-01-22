@@ -13,8 +13,9 @@ int main()
 		const hsize_t dims[]    = {1};
 
 		H5::StrType dtype(H5::PredType::C_S1);
+		dtype.setCset(H5T_CSET_UTF8);
 		dtype.setSize(H5T_VARIABLE);
-		H5::DataSpace dataspace(1, dims);
+		H5::DataSpace dataspace(H5S_SCALAR);
 		H5::Attribute attribute = file.createAttribute(attrName, dtype, dataspace);
 		attribute.write(dtype, attrData); 
 		attribute.close();
