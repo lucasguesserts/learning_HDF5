@@ -2,6 +2,8 @@
 #include <vector>
 #include <H5Cpp.h>
 
+enum class Vowel : unsigned {A, E, I, O, U};
+
 int main()
 {
 	try
@@ -40,6 +42,29 @@ int main()
 			std::cout << "}" << std::endl;
 			dataset.close();
 		}
+
+		{ 
+			// Enum dataset
+			H5std_string  datasetName = "enumeration";
+			H5::DataSet dataset = file.openDataSet(datasetName);
+			std::cout << "\tDataset '" << datasetName << "' opened." << std::endl;
+			// Dataset data
+			std::vector<Vowel> datasetData;
+			datasetData.resize(5);
+			dataset.read(datasetData.data(), H5::PredType::NATIVE_UINT);
+			std::cout << "\t\tDataSet '" << datasetName << "' data read." << std::endl;
+			std::cout << "\t\tContent: {";
+			for(auto& val: datasetData)
+				std::cout << static_cast<unsigned>(val) << ", ";
+			std::cout << "}" << std::endl;
+			// Check correctness
+			std::vector<Vowel> correctDatasetData = {Vowel::I, Vowel::E, Vowel::U, Vowel::A, Vowel::O};
+			for(unsigned i=0 ; i<correctDatasetData.size() ; ++i)
+				if(correctDatasetData.at(i) != datasetData.at(i))
+					std::cout << "Error at entry" << i << std::endl;
+			// Close
+			dataset.close();
+		}
 		
 		// Group
 		std::string groupName = "group example";
@@ -76,6 +101,7 @@ int main()
 			dataset.close();
 		}
 
+		// Close general
 		group.close();
 		file.close();
 	}

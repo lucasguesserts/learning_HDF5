@@ -1,6 +1,8 @@
 #include <vector>
 #include <H5Cpp.h>
 
+enum class Vowel : unsigned {A, E, I, O, U};
+
 int main()
 {
 	// File
@@ -76,9 +78,26 @@ int main()
 		dataset.close();
 	}
 
-	// Group with hard liink
+	// Group with hard link
 	H5::Group groupHL = file.createGroup("something inside");
 	groupHL.link(H5L_TYPE_HARD, "/group example", "group with things");
+
+	{ 
+		// Enum dataset
+		H5std_string  datasetName = "enumeration";
+		std::vector<Vowel> datasetData = {Vowel::I, Vowel::E, Vowel::U, Vowel::A, Vowel::O};
+		const hsize_t dims[]    = {datasetData.size()};
+
+		H5::DataType fileType(H5::PredType::STD_U32LE);
+		H5::DataType memType (H5::PredType::NATIVE_UINT);
+		H5::DataSpace dataspace(1, dims);
+		H5::DataSet dataset = file.createDataSet(datasetName, fileType, dataspace);
+		dataset.write(datasetData.data(), memType);
+		fileType.close();
+		memType.close();
+		dataspace.close();
+		dataset.close();
+	}
 
 	groupHL.close();
 	group.close();
